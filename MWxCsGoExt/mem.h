@@ -1,5 +1,7 @@
 #pragma once
 
+extern c_memory g_memory;
+
 class c_memory {
 
 	public:
@@ -33,4 +35,3 @@ class c_memory {
 };
 
 
-extern c_memory g_memory;
