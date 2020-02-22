@@ -76,13 +76,13 @@ constexpr uintptr_t m_yawClassPtr = 0xC60E38;
 class Offset
 {
 public:
-	uintptr_t entityList = 0;
 	uintptr_t entDist = 0x10;
+	uintptr_t entityList = 0;
 
 	uintptr_t getEntList()
 	{
 		//g_memory.read(client_module + dwEntityList, &entityList, 4);
-		//return entityList;
+		return entityList;
 	}
 };
 

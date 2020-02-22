@@ -7,8 +7,7 @@
 
 
 int main() {
-	Player my_player;
-	Offset offset;
+	CGame my_player;
 
 	if (g_memory.open("csgo.exe"))
 	{
@@ -27,4 +26,5 @@ int main() {
 	//setting the ent list addr
 	offset.getEntList();
 
+	return 0;
 }

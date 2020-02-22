@@ -1,5 +1,4 @@
 #pragma once
-#include "player.h"
 #include <Windows.h>
 #include "mem.h"
 #include "offsets.h"
@@ -8,7 +7,7 @@
 
 Offset offset;
 
-class Player
+class CGame
 {
 
 private:
