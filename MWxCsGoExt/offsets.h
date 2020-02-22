@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include "mem.h"
 
 uintptr_t client_module = 0;
 uintptr_t engine_module = 0;
@@ -80,8 +81,8 @@ public:
 
 	uintptr_t getEntList()
 	{
-		g_memory.read(client_module + dwEntityList, &entityList, 4);
-		return entityList;
+		//g_memory.read(client_module + dwEntityList, &entityList, 4);
+		//return entityList;
 	}
 };
 
