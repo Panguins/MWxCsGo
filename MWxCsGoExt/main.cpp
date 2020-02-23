@@ -8,6 +8,7 @@
 int main() {
 	CGame my_player;
 	Offset offset;
+	CBaseEntity player[64];
 
 	//open process if doesnt return true than exception
 	if (g_memory.open("csgo.exe"))
@@ -28,18 +29,19 @@ int main() {
 
 	//setting the ent list addr
 	offset.getEntList();
+	my_player.getLocalPlayer();
 
 	while (1) {
-		//while (GetKeyState(VK_XBUTTON1) & 0x8000)
-		//{
+		while (GetKeyState(VK_XBUTTON1) & 0x8000)
+		{
 			// get the player address of selected entity in the list
-		Sleep(10);
-		//}
+			my_player.getTeam();
+			int fun;
+			fun = my_player.getHealth();
+			printf("Jews : %i\n", fun);
+			Sleep(10);
+		}
 	}
-
-	//for (int i = 0; i < 64; i++)
-	//{ }
-
 
 	return 0;
 };
