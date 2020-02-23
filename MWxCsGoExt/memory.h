@@ -1,9 +1,10 @@
 #pragma once
-#include <iostream>
-#include <Windows.h>
-#include <vector>
+#include <windows.h>
 #include <TlHelp32.h>
-#include "offsets.h"
+#include <sstream>
+#include <string>
+#include <vector>
+#include <iterator>
 
 class c_memory {
 	int m_process_index{};
@@ -15,11 +16,11 @@ class c_memory {
 
 	bool m_has_process = false;
 
-	//PUBLIC BEGINS
 public:
 	c_memory() {}
 
 	~c_memory() { if (m_process_handle) CloseHandle(m_process_handle); }
+
 
 	//Open Process
 	bool open(const char* target_name) {
@@ -34,7 +35,6 @@ public:
 
 		return !!m_process_index && !!m_process_handle && !!m_process_base && m_process_handle != INVALID_HANDLE_VALUE;
 	}
-
 
 	//Grab the module
 	__forceinline bool base(const char* module_name, uintptr_t* base, uintptr_t* size) {
@@ -67,6 +67,10 @@ public:
 
 	}
 
+	bool opened()
+	{
+		return m_has_process;
+	}
 
 	//Get Module Function
 	bool getmodule(const char* moduleName, uintptr_t* moduleVar, uintptr_t* moduleSize) {
@@ -85,33 +89,20 @@ public:
 		return true;
 	}
 
-
-
-	//Get the Base Address
 	uintptr_t get_base_address()
 	{
 		return m_process_base;
 	}
 
-
-	// See if process is Opened
-	bool opened()
-	{
-		return m_has_process;
-	}
-
-
-	//Read
 	__forceinline void write(uintptr_t address, void* value, size_t size)
 	{
 		WriteProcessMemory(m_process_handle, (LPVOID)address, (LPCVOID)value, size, 0);
 	}
-	//Write
+
 	__forceinline void read(uintptr_t address, void* buffer, size_t size) {
 		ReadProcessMemory(m_process_handle, (LPVOID)address, buffer, size, 0);
 	}
 
-	//Template Read Func
 	template< typename type = uintptr_t > __forceinline type read(uintptr_t address, size_t size)
 	{
 		unsigned long buffer;
@@ -119,20 +110,8 @@ public:
 		return (type)buffer;
 	}
 
-	//Template Write Func
-	template< typename type = uintptr_t > __forceinline type write(uintptr_t address, size_t size)
-	{
-		unsigned long buffer;
-		WriteProcessMemory(m_process_handle, (LPVOID)address, &buffer, size, 0);
-		return (type)buffer;
-	}
 
-	// PRIVATE BEGINS
 private:
-
-
-
-	//Get the Process ID
 	__forceinline int get(const char* process_)
 	{
 		PROCESSENTRY32 pe32;
@@ -161,7 +140,9 @@ private:
 
 		CloseHandle(snap);
 		return 0;
+		//MessageBoxA(nullptr, "couldnt find target", "NIGGA", MB_OK);
 	}
+
 
 };
 extern c_memory g_memory;

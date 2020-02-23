@@ -1,17 +1,15 @@
 #pragma once
 #include <Windows.h>
-#include "mem.h"
-#include "offsets.h"
+#include "memory.h"
+#include "offset.h"
 #include "math.h"
-
 
 Offset offset;
 
+
 class CGame
 {
-
 private:
-
 public:
 	uintptr_t localPlayer = 0;
 	uintptr_t playerInCross = 0;
